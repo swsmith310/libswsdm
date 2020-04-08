@@ -2,7 +2,7 @@
 ## A simple scripting standard for managing game data by Spencer Smith
 ### Last updated 8 April 2020
 
-*SCFS*, shorthand for *Spenny's Cool Flag System*, is a very simple scripting standard for managing game data. Just how simple is it? Well, there is only one keyword, and only one operator.
+*SCFS*, or *Spenny's Cool Flag System*, is a very simple scripting standard for saving and managing game data. Just how simple is it? Well, there is only one keyword, and only one operator.
 
 ## Syntax
 The structure of an *SCFS* file is as follows:
@@ -14,12 +14,12 @@ FLAG_C|0
 ENDFLAGS 
 ```
 
-The pipe operator (|) takes two parameters, a flag key on the left, and a flag value on the right. Flag keys should be kept at a maximum of 16 characters and must not exceed 32 characters. Flag values can be any type, as they will be stored as a `std::string` variable in the actual flag object, This means that it's up to you to typecast values when applying them to variables in the C++ code. 
+The pipe operator (|) takes two parameters, a flag key on the left, and a flag value on the right. Flag keys should be kept at a maximum of 16 characters and must not exceed 32 characters. Flag values can be any type, as they will be stored as a `std::string` variable in the actual flag object, meaning that it's up to you to typecast values when applying them to variables in the C++ code. 
 
 There must be only one key/value pair per line, and there must be no spaces between the parameters and pipe. The final line of the script is `ENDFLAGS`, the keyword that tells the program to stop reading the file. Any flags written after this line will be ignored.
 
 ## Usage Summary
-*SCFS* is used to initialize, save, and load all data in the game. The data for a fresh game is saved in the file *baseFlags.scfs*, located in the project's root directory. This file is loaded in the `SCFS::init()` constructor function and used to instantiate all of the flags. As such, it is the very first function called in `main`.
+*SCFS* is used to initialize, save, and load all data in the game. The data for a fresh game is saved in the file *baseFlags.scfs*, located by default in the project's root directory. This file is loaded in the `SCFS::init()` constructor function and used to instantiate all of the flags. As such, it is the very first function called in `main`.
 
 *SCFS* is interpreted by the *SCFS Parser*, defined in the function `SCFS::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)`. This function splits the key/value pairs in the *SCFL* script into two `std::vector<std::string>` objects, which are then iterated through, generating the `SCFS::Flag` objects into the game.
 
