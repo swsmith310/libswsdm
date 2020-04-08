@@ -40,7 +40,7 @@ The game is saved by calling `SCFS::saveGame(std::string sf)`, which creates a f
 
 `if (f.key == "KEY") VARIABLE = f.value`
 
-Where `f` refers to the iterator over the `std::list<SCFS::Flag*> flags` list. This function should be overridden by any classes that need to use it for object-specific flags, such as your player character, but the structure should always remain the same.
+Where `f` refers to the iterator over the `std::list<SCFS::Flag*> flags` list. This function should be redefined by any classes that need to use it for object-specific flags, such as your player character, but the structure should always remain the same.
 
 `void SCFS::updateFlag(std::string k, std::string v)` - This function modifies the value of `SCFS::Flag` objects by iterating through the `flags` list to find the key that matches `k` and changing the value of that flag to `v`. If the flag key cannot be found, the function will fail. 
 
