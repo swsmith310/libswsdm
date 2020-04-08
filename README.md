@@ -9,17 +9,8 @@ The structure of an *SCFS* file is as follows:
 
 ```
 FLAG_A|0
-```
-
-``` 
 FLAG_B|0
-``` 
-
-```
 FLAG_C|0
-```
-
-``` 
 ENDFLAGS 
 ```
 
