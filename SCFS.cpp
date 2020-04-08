@@ -35,8 +35,7 @@ void SCFS::parse(std::string const& s, const char d, std::vector<std::string>& o
     while ((start = s.find_first_not_of(d, end)) != std::string::npos)
     {
         end = s.find(d, start);
-        end > 32 ? o2.push_back(s.substr(start, end - start))
-                 : o1.push_back(s.substr(start, end - start));
+        end > 32 ? o2.push_back(s.substr(start, end - start)) : o1.push_back(s.substr(start, end - start));
     }
 }
 
