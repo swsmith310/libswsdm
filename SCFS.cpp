@@ -16,18 +16,20 @@
 */
 #include "SCFS.h"
 
-SCFS::Flag::Flag(std::string k, std::string v)
+std::list<sc::Flag*> sc::SCFS::flags;
+
+sc::Flag::Flag(std::string k, std::string v)
 {
     setKey(k);
     setValue(v);
 }
 
-void SCFS::init()
+void sc::SCFS::init()
 {
     loadGame("baseFlags");
 }
 
-void SCFS::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)
+void sc::SCFS::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)
 {
     size_t start;
     size_t end = 0;
@@ -39,13 +41,13 @@ void SCFS::parse(std::string const& s, const char d, std::vector<std::string>& o
     }
 }
 
-void SCFS::addFlag(std::string k, std::string v)
+void sc::SCFS::addFlag(std::string k, std::string v)
 {
-    SCFS::Flag* f = new Flag(k, v);
+    Flag* f = new Flag(k, v);
     flags.push_back(f);
 } 
 
-void SCFS::loadFlags()
+void sc::SCFS::loadFlags()
 {
     for (auto& f : flags)
     {
@@ -53,7 +55,7 @@ void SCFS::loadFlags()
     }
 }
 
-void SCFS::updateFlag(std::string k, std::string v)
+void sc::SCFS::updateFlag(std::string k, std::string v)
 {
     for (auto& f : flags)
     {
@@ -64,14 +66,14 @@ void SCFS::updateFlag(std::string k, std::string v)
     }
 }
 
-std::string SCFS::viewFlags()
+std::string sc::SCFS::viewFlags()
 {
     std::string fs;
     for (auto& f : flags) fs.append(f->key + "|" + f->value + "\n");
     return fs;
 }
 
-void SCFS::loadGame(std::string sf)
+void sc::SCFS::loadGame(std::string sf)
 {
     std::string line;
     std::ifstream file(sf + ".scfs");
@@ -97,7 +99,7 @@ void SCFS::loadGame(std::string sf)
     loadFlags();
 }
 
-void SCFS::saveGame(std::string sf)
+void sc::SCFS::saveGame(std::string sf)
 {
     std::ofstream saveFile(sf + ".scfs");
     saveFile << viewFlags() << "ENDFLAGS";
@@ -105,18 +107,18 @@ void SCFS::saveGame(std::string sf)
 }
 
 // Uncomment and compile for basic testing
-/*int main()
+int main()
 {
     int t1, t2, t3;
-    SCFS::init();
-    SCFS::loadGame("test");
-    std::cout << SCFS::viewFlags();
+    sc::SCFS::init();
+    sc::SCFS::loadGame("test");
+    std::cout << sc::SCFS::viewFlags();
     std::cin >> t1;
     std::cin >> t2;
     std::cin >> t3;
-    SCFS::updateFlag("FLAG_A", std::to_string(t1));
-    SCFS::updateFlag("FLAG_B", std::to_string(t2));
-    SCFS::updateFlag("FLAG_C", std::to_string(t3));
-    SCFS::saveGame("test");
+    sc::SCFS::updateFlag("FLAG_A", std::to_string(t1));
+    sc::SCFS::updateFlag("FLAG_B", std::to_string(t2));
+    sc::SCFS::updateFlag("FLAG_C", std::to_string(t3));
+    sc::SCFS::saveGame("test");
     return 0;
-}*/
+}
