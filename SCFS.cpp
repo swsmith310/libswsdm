@@ -107,7 +107,7 @@ void sc::SCFS::saveGame(std::string sf)
 }
 
 // Uncomment and compile for basic testing
-int main()
+/*int main()
 {
     int t1, t2, t3;
     sc::SCFS::init();
@@ -121,4 +121,4 @@ int main()
     sc::SCFS::updateFlag("FLAG_C", std::to_string(t3));
     sc::SCFS::saveGame("test");
     return 0;
-}
+}*/
