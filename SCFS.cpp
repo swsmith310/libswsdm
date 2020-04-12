@@ -96,7 +96,6 @@ void sc::SCFS::loadGame(std::string sf)
     }
     catch(const std::exception& e) { std::cerr << "SAVE FILE CORRUPTED" << '\n'; }
     file.close();
-    loadFlags();
 }
 
 void sc::SCFS::saveGame(std::string sf)

@@ -38,16 +38,16 @@ The game is saved by calling `sc::SCFS::saveGame(std::string sf)`, which creates
 
 `void sc::SCFS::addFlag(std::string k, std::string v)` - This function creates a `new sc::Flag(std::string k, std::string v)` object `f` and then calls `flags.push_back(f)`. `flags` refers to the namespace variable `std::list<sc::Flag*> sc::SCFS::flags` which stores all of the flags.
 
-`void sc::SCFS::loadFlags()` - This function is used to apply the values of flags to C++ variables by following a very simple structure:
+`void sc::SCFS::loadFlags()` - This skeleton function is used to apply the values of flags to C++ variables by following a very simple structure:
 
 `if (f.key == "KEY") VARIABLE = f.value`
 
-Where `f` refers to the iterator over the `std::list<SCFS::Flag*> flags` list. This function should be redefined by any classes that need to use it for object-specific flags, such as your player character, but the structure should always remain the same.
+Where `f` refers to the iterator over the `std::list<SCFS::Flag*> flags` list. This function is to be redefined by any classes that need to use it for object-specific flags, such as your player character, but the structure should always remain the same. You will never need to call this function from the `sc::SCFS` struct itself.
 
 `void sc::SCFS::updateFlag(std::string k, std::string v)` - This function modifies the value of `SCFS::Flag` objects by iterating through the `flags` list to find the key that matches `k` and changing the value of that flag to `v`. If the flag key cannot be found, the function will fail. 
 
 `std::string sc::SCFS::viewFlags()` - This function returns the entire `flags` list as a `std::string` object. 
 
-`void sc::SCFS::loadGame(std::string sf)` - This function loads the file *sf.scfs* into the `std::ifstream file` object, which is then iterated through line by line. `sc::SCFS::parse(args)` is called on every line, and then the resulting vectors are iterated through to either `sc::SCFS::addFlags(args)` if `sf` is equal to `"baseFlags"`; otherwise, `sc::SCFS::updateFlags(args)` is called instead. Once `flags` has been populated or modified, `sc::SCFS::loadFlags()` is called to apply flag values to their respective C++ variables.
+`void sc::SCFS::loadGame(std::string sf)` - This function loads the file *sf.scfs* into the `std::ifstream file` object, which is then iterated through line by line. `sc::SCFS::parse(args)` is called on every line, and then the resulting vectors are iterated through to either `sc::SCFS::addFlags(args)` if `sf` is equal to `"baseFlags"`; otherwise, `sc::SCFS::updateFlags(args)` is called instead. 
 
 `void sc::SCFS::saveGame(std::string sf)` - This function loads the file *sf.scfs* into the `std::ofstream file` object, creating it if it does not already exist, and then writes the return value of `sc::SCFS::viewFlags()` followed by the `ENDFLAGS` keyword to the file.
