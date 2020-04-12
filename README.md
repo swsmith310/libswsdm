@@ -1,6 +1,10 @@
 # SCFS v1.15
 ## Developed by Spencer Smith (spencerwayne310@gmail.com)
+<<<<<<< HEAD
 ### Last updated 12 April 2020
+=======
+### Last updated 9 April 2020
+>>>>>>> d103d9df958c9c86d0b4587e63522f69c6951d3b
 
 *SCFS*, or *Spenny's Cool Flag System*, is a very simple scripting standard for saving and managing game data. Just how simple is it? Well, there is only one keyword, and only one operator.
 
