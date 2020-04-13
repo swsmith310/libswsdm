@@ -32,7 +32,7 @@ The game is saved by calling `sc::SCFS::saveGame(std::string sf)`, which creates
 
 `std::list<sc::Flag*> flags` - A list object that stores all of the in-game flags.
 
-`void sc::SCFS::init()` - This function should be the very first thing you call in the main method of your game. This function calls `sc::SCFS::loadGame(std::string sf)` on *baseFlags.scfs*, populating the `flags` object and initializing all of the data in the game.
+`void sc::SCFS::SCFS()` - This function should be the very first thing you call in the main method of your game. This function calls `sc::SCFS::loadGame(std::string sf)` on *baseFlags.scfs*, populating the `flags` object and initializing all of the data in the game.
 
 `void sc::SCFS::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)` - The function that interprets *SCFS* scripts. Uses a modified string splitting algorithm to separate flag keys and values into separate `std::vector<std::string>` variables which are then iterated through to add or manipulate flags. 
 
