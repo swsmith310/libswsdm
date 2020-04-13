@@ -24,7 +24,7 @@ sc::Flag::Flag(std::string k, std::string v)
     setValue(v);
 }
 
-void sc::SCFS::init()
+sc::SCFS::SCFS()
 {
     loadGame("baseFlags");
 }

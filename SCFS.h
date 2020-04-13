@@ -35,8 +35,8 @@ namespace sc
     };
     struct SCFS
     {
+        SCFS();
         static std::list<Flag*>       flags;
-        static void                   init();
         static void                   parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2);
         static void                   addFlag(std::string k, std::string v=0);
         static void                   loadFlags();
