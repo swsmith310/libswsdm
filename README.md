@@ -36,7 +36,7 @@ The game is saved by calling `sc::SCFS::saveGame(std::string sf)`, which creates
 
 `void sc::SCFS::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)` - The function that interprets *SCFS* scripts. Uses a modified string splitting algorithm to separate flag keys and values into separate `std::vector<std::string>` variables which are then iterated through to add or manipulate flags. 
 
-`void sc::SCFS::addFlag(std::string k, std::string v)` - This function creates a `new sc::Flag(std::string k, std::string v)` object `f` and then calls `flags.push_back(f)`. `flags` refers to the namespace variable `std::list<sc::Flag*> sc::SCFS::flags` which stores all of the flags.
+`void sc::SCFS::addFlag(std::string k, std::string v)` - This function creates a `new sc::Flag(std::string k, std::string v)` object `f` and then calls `flags.push_back(f)`.
 
 `void sc::SCFS::loadFlags()` - This skeleton function is used to apply the values of flags to C++ variables by following a very simple structure:
 
