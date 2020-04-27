@@ -109,7 +109,7 @@ void sc::SCFS::saveGame(std::string sf)
 /*int main()
 {
     int t1, t2, t3;
-    sc::SCFS::init();
+    sc::SCFS();
     sc::SCFS::loadGame("test");
     std::cout << sc::SCFS::viewFlags();
     std::cin >> t1;
