@@ -2,7 +2,7 @@
 ## Developed by Spencer Smith (spencerwayne310@gmail.com)
 ### Last updated 26 April 2020
 
-*SCFS* is a very simple scripting standard for saving and managing game data. Just how simple is it? Well, there is only one keyword, and only one operator.
+*SCFS* is a very simple specification for saving and managing game data. Just how simple is it? Well, there is only one keyword, and only one operator.
 
 ## Syntax
 The structure of an *SCFS* file is as follows:
