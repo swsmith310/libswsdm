@@ -1,5 +1,5 @@
 # SCFS v1.15
-## Developed by Spencer Smith (spencerwayne310@gmail.com)
+## Developed by Spencer Smith (spenny@geniuspiece.com)
 ### Last updated 26 April 2020
 
 *SCFS* is a very simple specification for saving and managing game data. Just how simple is it? Well, there is only one keyword, and only one operator.
