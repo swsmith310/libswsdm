@@ -1,4 +1,4 @@
- /* SCFS - A simple standard for managing game data
+ /* SCGSM - A simple standard for managing game data
   * Copyright (C) 2020 Spencer Smith <spenny@geniuspiece.com>
   *
   * This program is free software: you can redistribute it and/or modify
@@ -15,9 +15,9 @@
   * along with this program.  If not, see <https://www.gnu.org/licenses/>.
   */
 
-#include "SCFS.h"
+#include "SCGSM.h"
 
-std::list<sc::Flag*> sc::FS::flags;
+std::list<sc::Flag*> sc::GSM::flags;
 
 sc::Flag::Flag(std::string k, std::string v)
 {
@@ -25,12 +25,12 @@ sc::Flag::Flag(std::string k, std::string v)
     set_value(v);
 }
 
-sc::FS::FS()
+sc::GSM::GSM()
 {
     load_flags("baseflags");
 }
 
-void sc::FS::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)
+void sc::GSM::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)
 {
     size_t start;
     size_t end = 0;
@@ -42,13 +42,13 @@ void sc::FS::parse(std::string const& s, const char d, std::vector<std::string>&
     }
 }
 
-void sc::FS::add_flag(std::string k, std::string v)
+void sc::GSM::add_flag(std::string k, std::string v)
 {
     Flag* f = new Flag(k, v);
     flags.push_back(f);
 } 
 
-void sc::FS::update_flag(std::string k, std::string v)
+void sc::GSM::update_flag(std::string k, std::string v)
 {
     for (auto& f : flags)
     {
@@ -59,17 +59,17 @@ void sc::FS::update_flag(std::string k, std::string v)
     }
 }
 
-std::string sc::FS::view_flags()
+std::string sc::GSM::view_flags()
 {
     std::string fs;
     for (auto& f : flags) fs.append(f->key + "|" + f->value + "\n");
     return fs;
 }
 
-void sc::FS::load_flags(std::string sf)
+void sc::GSM::load_flags(std::string sf)
 {
     std::string line;
-    std::ifstream file(sf + ".scfs");
+    std::ifstream file(sf + ".scgs");
     try
     {
         while(std::getline(file, line))
@@ -90,9 +90,9 @@ void sc::FS::load_flags(std::string sf)
     file.close();
 }
 
-void sc::FS::save_flags(std::string sf)
+void sc::GSM::save_flags(std::string sf)
 {
-    std::ofstream saveFile(sf + ".scfs");
+    std::ofstream saveFile(sf + ".scgs");
     saveFile << view_flags();
     saveFile.close();
 }
@@ -101,15 +101,15 @@ void sc::FS::save_flags(std::string sf)
 /*int main()
 {
     int t1, t2, t3;
-    sc::FS();
-    sc::FS::load_flags("test");
-    std::cout << sc::FS::view_flags();
+    sc::GSM();
+    sc::GSM::load_flags("test");
+    std::cout << sc::GSM::view_flags();
     std::cin >> t1;
     std::cin >> t2;
     std::cin >> t3;
-    sc::FS::update_flag("FLAG_A", std::to_string(t1));
-    sc::FS::update_flag("FLAG_B", std::to_string(t2));
-    sc::FS::update_flag("FLAG_C", std::to_string(t3));
-    sc::FS::save_flags("test");
+    sc::GSM::update_flag("FLAG_A", std::to_string(t1));
+    sc::GSM::update_flag("FLAG_B", std::to_string(t2));
+    sc::GSM::update_flag("FLAG_C", std::to_string(t3));
+    sc::GSM::save_flags("test");
     return 0;
 }*/
