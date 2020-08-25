@@ -1,32 +1,33 @@
  /* SCFS - A simple standard for managing game data
-    Copyright (C) 2020 Spencer Smith
+  * Copyright (C) 2020 Spencer Smith <spenny@geniuspiece.com>
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+  */
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
 #include "SCFS.h"
 
 std::list<sc::Flag*> sc::FS::flags;
 
 sc::Flag::Flag(std::string k, std::string v)
 {
-    setKey(k);
-    setValue(v);
+    set_key(k);
+    set_value(v);
 }
 
 sc::FS::FS()
 {
-    loadGame("baseFlags");
+    load_flags("baseflags");
 }
 
 void sc::FS::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)
@@ -41,39 +42,31 @@ void sc::FS::parse(std::string const& s, const char d, std::vector<std::string>&
     }
 }
 
-void sc::FS::addFlag(std::string k, std::string v)
+void sc::FS::add_flag(std::string k, std::string v)
 {
     Flag* f = new Flag(k, v);
     flags.push_back(f);
 } 
 
-void sc::FS::loadFlags()
-{
-    for (auto& f : flags)
-    {
-        // if (f->key == "KEY") VARIABLE = f->value;
-    }
-}
-
-void sc::FS::updateFlag(std::string k, std::string v)
+void sc::FS::update_flag(std::string k, std::string v)
 {
     for (auto& f : flags)
     {
         if (f->key == k)
         {
-            f->setValue(v);
+            f->set_value(v);
         }
     }
 }
 
-std::string sc::FS::viewFlags()
+std::string sc::FS::view_flags()
 {
     std::string fs;
     for (auto& f : flags) fs.append(f->key + "|" + f->value + "\n");
     return fs;
 }
 
-void sc::FS::loadGame(std::string sf)
+void sc::FS::load_flags(std::string sf)
 {
     std::string line;
     std::ifstream file(sf + ".scfs");
@@ -86,11 +79,10 @@ void sc::FS::loadGame(std::string sf)
             parse(line, '|', keys, values);
             for (auto& k : keys)
             {  
-                if (k == "ENDFLAGS") break;
                 std::string value;
                 for (auto& v : values) value = v;
-                if (sf == "baseFlags") addFlag(k, value);
-                else                   updateFlag(k, value);
+                if (sf == "baseflags") add_flag(k, value);
+                else                   update_flag(k, value);
             }
         }
     }
@@ -98,26 +90,26 @@ void sc::FS::loadGame(std::string sf)
     file.close();
 }
 
-void sc::FS::saveGame(std::string sf)
+void sc::FS::save_flags(std::string sf)
 {
     std::ofstream saveFile(sf + ".scfs");
-    saveFile << viewFlags() << "ENDFLAGS";
+    saveFile << view_flags();
     saveFile.close();
 }
 
 // Uncomment and compile for basic testing
-int main()
+/*int main()
 {
     int t1, t2, t3;
     sc::FS();
-    sc::FS::loadGame("test");
-    std::cout << sc::FS::viewFlags();
+    sc::FS::load_flags("test");
+    std::cout << sc::FS::view_flags();
     std::cin >> t1;
     std::cin >> t2;
     std::cin >> t3;
-    sc::FS::updateFlag("FLAG_A", std::to_string(t1));
-    sc::FS::updateFlag("FLAG_B", std::to_string(t2));
-    sc::FS::updateFlag("FLAG_C", std::to_string(t3));
-    sc::FS::saveGame("test");
+    sc::FS::update_flag("FLAG_A", std::to_string(t1));
+    sc::FS::update_flag("FLAG_B", std::to_string(t2));
+    sc::FS::update_flag("FLAG_C", std::to_string(t3));
+    sc::FS::save_flags("test");
     return 0;
-}
+}*/
