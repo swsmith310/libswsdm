@@ -1,6 +1,6 @@
 # SCGSM C++ Edition v1.2.0
 ## Developed by Spencer Smith (spenny@geniuspiece.com)
-### Last updated 26 April 2020
+### Last updated 25 August 2020
 
 *SCGSM* is a very simple specification for saving and managing game data. 
 
