@@ -98,7 +98,7 @@ void sc::DM::save_flags(std::string sf)
 }
 
 // Uncomment and compile for basic testing
-int main()
+/*int main()
 {
     int t1, t2, t3;
     sc::DM();
@@ -112,4 +112,4 @@ int main()
     sc::DM::update_flag("FLAG_C", std::to_string(t3));
     sc::DM::save_flags("test");
     return 0;
-}
+}*/
