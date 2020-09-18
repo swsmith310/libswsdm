@@ -1,0 +1,3 @@
+FLAG_A|3
+FLAG_B|4
+FLAG_C|5

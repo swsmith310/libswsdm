@@ -1,4 +1,4 @@
-/* SCGSM - A simple standard for managing game data
+/* SCDM - A simple standard for managing program data
  * Copyright (C) 2020 Spencer Smith
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 #include <string>
 #include <vector>
 
-#ifndef SCGSM_H
-#define SCGSM_H
+#ifndef SCDM_H
+#define SCDM_H
 
 namespace sc
 {
@@ -34,9 +34,9 @@ namespace sc
         void          set_key(std::string k)   { key = k; }
         void          set_value(std::string v) { value = v; }
     };
-    struct GSM
+    struct DM
     {
-        GSM();
+        DM();
         static std::list<Flag*>       flags;
         static void                   parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2);
         static void                   add_flag(std::string k, std::string v=0);
