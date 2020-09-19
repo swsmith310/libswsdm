@@ -17,7 +17,6 @@
 
 #include <fstream>
 #include <iostream>
-#include <list>
 #include <string>
 #include <vector>
 
@@ -37,7 +36,7 @@ namespace sc
     struct DM
     {
         DM();
-        static std::list<Flag*>       flags;
+        static std::vector<Flag*>       flags;
         static void                   parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2);
         static void                   add_flag(std::string k, std::string v=0);
         static void                   update_flag(std::string k, std::string v=0);

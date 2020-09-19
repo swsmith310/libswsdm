@@ -17,7 +17,7 @@
 
 #include "SCDM.h"
 
-std::list<sc::Flag*> sc::DM::flags;
+std::vector<sc::Flag*> sc::DM::flags;
 
 sc::Flag::Flag(std::string k, std::string v)
 {
@@ -98,7 +98,7 @@ void sc::DM::save_flags(std::string sf)
 }
 
 // Uncomment and compile for basic testing
-/*int main()
+int main()
 {
     int t1, t2, t3;
     sc::DM();
@@ -112,4 +112,4 @@ void sc::DM::save_flags(std::string sf)
     sc::DM::update_flag("FLAG_C", std::to_string(t3));
     sc::DM::save_flags("test");
     return 0;
-}*/
+}

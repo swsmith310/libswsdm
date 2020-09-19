@@ -1,6 +1,6 @@
-# SCDM C++ Edition v1.3.0
+# SCDM C++ Edition v1.4.0
 ## Developed by Spencer Smith (spenny@geniuspiece.com)
-### Last updated 18 September 2020
+### Last updated 19 September 2020
 
 *SCDM* is a very simple specification for saving and managing program data. 
 
@@ -19,7 +19,17 @@ There must be only one key/value pair per line, and there must be no spaces betw
 
 ## Changes from previous version
 
-Originally *.scd* files would end with the line "ENDFLAGS", however this was decided to be redundant and thus removed from this version of the specification.
+### 1.4.0
+
+- Changed type of `sc::DM::flags` from `std::list` to `std::vector` to allow more direct access to elements rather than having to constantly iterate to populate fields.
+
+### 1.3.0
+
+- Changed name to SCDM to reflect the project's shift away from game data to more general program data management.
+
+### 1.2.0
+
+- Originally *.scd* files would end with the line "ENDFLAGS", however this was decided to be redundant and thus removed from this version of the specification.
 
 ## Usage Summary
 *SCDM* is used to initialize, save, and load all data in the program. The data for a fresh game is saved in the file *baseFlags.scd*, located by default in the project's root directory. This file is loaded in the `sc::DM::init()` constructor function and used to instantiate all of the flags. As such, it should be the first function called in `main`.
@@ -33,7 +43,7 @@ The game is saved by calling `sc::DM::save_flags(std::string sf)`, which creates
 
 `struct sc::DM` - Static structure which defines objects and functions for saving, loading, and managing game data. 
 
-`std::list<sc::Flag*> flags` - A list object that stores all of the in-game flags.
+`std::vector<sc::Flag*> flags` - A vector object that stores all of the in-game flags.
 
 `void sc::DM::DM()` - This function should be the very first thing you call in the main method of your game. This function calls `sc::DM::load_flags(std::string sf)` on *baseFlags.scd*, populating the `flags` object and initializing all of the data in the game.
 
