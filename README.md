@@ -17,7 +17,7 @@ The pipe operator (|) takes two parameters, a flag key on the left, and a flag v
 
 There must be only one key/value pair per line, and there must be no spaces between the parameters and pipe. 
 
-## Changes from previous version
+## Changes from previous versions
 
 ### 1.4.0
 
