@@ -1,4 +1,4 @@
-# SCDM C++ Edition v1.4.0
+# SCDM C++ Edition v0.4.0
 ## Developed by Spencer Smith (spenny@geniuspiece.com)
 ### Last updated 19 September 2020
 
@@ -19,15 +19,15 @@ There must be only one key/value pair per line, and there must be no spaces betw
 
 ## Changes from previous versions
 
-### 1.4.0
+### 0.4.0
 
 - Changed type of `sc::DM::flags` from `std::list` to `std::vector` to allow more direct access to elements rather than having to constantly iterate to populate fields.
 
-### 1.3.0
+### 0.3.0
 
 - Changed name to SCDM to reflect the project's shift away from game data to more general program data management.
 
-### 1.2.0
+### 0.2.0
 
 - Originally *.scd* files would end with the line "ENDFLAGS", however this was decided to be redundant and thus removed from this version of the specification.
 
