@@ -49,7 +49,7 @@ There must be only one key/value pair per line, and there must be no spaces betw
 - Originally *.swsd* files would end with the line "ENDFLAGS", however this was decided to be redundant and thus removed from this version of the specification.
 
 ## Usage Summary
-*swsDM* is used to initialize, save, and load all data in the program. The data for a fresh game is saved in the file *baseFlags.swsd*, located by default in the project's root directory. This file is loaded in the `sws::DM::init()` constructor function and used to instantiate all of the flags. As such, it should be the first function called in `main`.
+*swsDM* is used to initialize, save, and load all data in the program. The data for a fresh game is saved in the file *saves/init.swsd*. This file is loaded in the `sws::DM::init()` constructor function and used to instantiate all of the flags. As such, it should be the first function called in `main`.
 
 *swsDM* is interpreted by the function `sws::DM::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)`. This function splits the key/value pairs in the *swsDM* script into two `std::vector<std::string>` objects, which are then iterated through, generating the `sws::Flag` objects into the game.
 
