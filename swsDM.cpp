@@ -17,26 +17,26 @@
 
 #include "swsDM.h"
 
-std::vector<sws::Flag*> sws::DM::flags;
+std::vector<sws::Data*> sws::DM::data;
 
-sws::Flag::Flag(const std::string &k, const std::string &v)
+sws::Data::Data(const std::string &k, const std::string &v)
 {
     set_key(k);
     set_value(v);
 }
 
-void sws::Flag::set_key(const std::string &k) { key = k; }
-void sws::Flag::set_value(const std::string &v) { value = v; }
+void sws::Data::set_key(const std::string &k) { key = k; }
+void sws::Data::set_value(const std::string &v) { value = v; }
 
-int sws::Flag::vtoi(const sws::Flag *f) { return std::stoi(f->value, NULL); }
-long sws::Flag::vtol(const sws::Flag *f) { return std::stol(f->value, NULL); }
-unsigned int sws::Flag::vtou(const sws::Flag *f) { return std::stoul(f->value, NULL); }
-float sws::Flag::vtof(const sws::Flag *f) { return std::stof(f->value, NULL); }
-double sws::Flag::vtod(const sws::Flag *f) { return std::stod(f->value, NULL); }
+int sws::Data::vtoi(const sws::Data *f) { return std::stoi(f->value, NULL); }
+long sws::Data::vtol(const sws::Data *f) { return std::stol(f->value, NULL); }
+unsigned int sws::Data::vtou(const sws::Data *f) { return std::stoul(f->value, NULL); }
+float sws::Data::vtof(const sws::Data *f) { return std::stof(f->value, NULL); }
+double sws::Data::vtod(const sws::Data *f) { return std::stod(f->value, NULL); }
 
 sws::DM::DM()
 {
-    load_flags("baseflags");
+    load_data("init");
 }
 
 void sws::DM::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)
@@ -51,15 +51,15 @@ void sws::DM::parse(std::string const& s, const char d, std::vector<std::string>
     }
 }
 
-void sws::DM::add_flag(const std::string &k, const std::string &v)
+void sws::DM::add_data(const std::string &k, const std::string &v)
 {
-    Flag* f = new Flag(k, v);
-    flags.push_back(f);
+    Data* f = new Data(k, v);
+    data.push_back(f);
 } 
 
-void sws::DM::update_flag(const std::string &k, const std::string &v)
+void sws::DM::update_data(const std::string &k, const std::string &v)
 {
-    for (auto& f : flags)
+    for (auto& f : data)
     {
         if (f->key == k)
         {
@@ -68,14 +68,14 @@ void sws::DM::update_flag(const std::string &k, const std::string &v)
     }
 }
 
-std::string sws::DM::view_flags()
+std::string sws::DM::view_data()
 {
     std::string fs;
-    for (auto& f : flags) fs.append(f->key + "|" + f->value + "\n");
+    for (auto& f : data) fs.append(f->key + "|" + f->value + "\n");
     return fs;
 }
 
-void sws::DM::load_flags(const std::string &sf)
+void sws::DM::load_data(const std::string &sf)
 {
     std::ifstream file("saves/" + sf + ".swsd");
     try
@@ -91,8 +91,8 @@ void sws::DM::load_flags(const std::string &sf)
             {  
                 std::string value;
                 for (auto& v: values) value = v;
-                if (sf == "baseflags") add_flag(k, value);
-                else                   update_flag(k, value);
+                if (sf == "init") add_data(k, value);
+                else              update_data(k, value);
             }
         }
     }
@@ -100,10 +100,10 @@ void sws::DM::load_flags(const std::string &sf)
     file.close();
 }
 
-void sws::DM::save_flags(const std::string &sf)
+void sws::DM::save_data(const std::string &sf)
 {
     std::ofstream saveFile("saves/" + sf + ".swsd");
-    saveFile << view_flags();
+    saveFile << view_data();
     saveFile.close();
 }
 
@@ -112,16 +112,16 @@ void sws::DM::save_flags(const std::string &sf)
 {
     int t1, t2, t3;
     sws::DM();
-    sws::DM::load_flags("test");
-    int x = sws::Flag::vtoi(sws::DM::flags[0]);
+    sws::DM::load_data("test");
+    int x = sws::Data::vtoi(sws::DM::data[0]);
     std::cout << "CAST TO INT: " << x << std::endl;
-    std::cout << sws::DM::view_flags();
+    std::cout << sws::DM::view_data();
     std::cin >> t1;
     std::cin >> t2;
     std::cin >> t3;
-    sws::DM::update_flag("FLAG_A", std::to_string(t1));
-    sws::DM::update_flag("FLAG_B", std::to_string(t2));
-    sws::DM::update_flag("FLAG_C", std::to_string(t3));
-    sws::DM::save_flags("test");
+    sws::DM::update_data("FLAG_A", std::to_string(t1));
+    sws::DM::update_data("FLAG_B", std::to_string(t2));
+    sws::DM::update_data("FLAG_C", std::to_string(t3));
+    sws::DM::save_data("test");
     return 0;
 }*/

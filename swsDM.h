@@ -25,29 +25,29 @@
 
 namespace sws
 {
-    struct Flag
+    struct Data
     {
         std::string           key;
         std::string           value;
-        Flag(const std::string &k="", const std::string &v=0);
+        Data(const std::string &k="", const std::string &v=0);
         void                  set_key(const std::string &k);   
         void                  set_value(const std::string &v); 
-        static int            vtoi(const sws::Flag *f);
-        static long           vtol(const sws::Flag *f);
-        static unsigned int   vtou(const sws::Flag *f);
-        static float          vtof(const sws::Flag *f);
-        static double         vtod(const sws::Flag *f);
+        static int            vtoi(const sws::Data *f);
+        static long           vtol(const sws::Data *f);
+        static unsigned int   vtou(const sws::Data *f);
+        static float          vtof(const sws::Data *f);
+        static double         vtod(const sws::Data *f);
     };
     struct DM
     {
         DM();
-        static std::vector<Flag*>     flags;
+        static std::vector<Data*>     data;
         static void                   parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2);
-        static void                   add_flag(const std::string &k, const std::string &v=0);
-        static void                   update_flag(const std::string &k, const std::string &v=0);
-        static std::string            view_flags();
-        static void                   load_flags(const std::string &sf);
-        static void                   save_flags(const std::string &sf);
+        static void                   add_data(const std::string &k, const std::string &v=0);
+        static void                   update_data(const std::string &k, const std::string &v=0);
+        static std::string            view_data();
+        static void                   load_data(const std::string &sf);
+        static void                   save_data(const std::string &sf);
     };
 }
 #endif
