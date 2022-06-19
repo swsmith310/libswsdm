@@ -2,7 +2,7 @@
 ## Developed by Spencer Smith (spencerwayne310@gmail.com)
 ### Last updated 18 June 2022
 
-*swsDM* is a very simple specification for saving and managing program data. 
+*swsDM* is a very simple specification designed primarily for saving and loading game data. *swsDM* uses standard C++11 and will build on any compatible compiler. The files can be included in any project, regardless of the libraries that you may be working with.
 
 ## Syntax
 The structure of a *.swsd* file is as follows:
