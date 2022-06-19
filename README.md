@@ -45,11 +45,11 @@ There must be only one key/value pair per line, and there must be no spaces betw
 - Originally *.swsd* files would end with the line "ENDFLAGS", however this was decided to be redundant and thus removed from this version of the specification.
 
 ## Usage Summary
-*swsDM* is used to initialize, save, and load all data in the program. The data for a fresh game is saved in the file *baseDatas.swsd*, located by default in the project's root directory. This file is loaded in the `sws::DM::init()` constructor function and used to instantiate all of the data. As such, it should be the first function called in `main`.
+*swsDM* is used to initialize, save, and load all data in the program. The data for a fresh game is saved in the file *saves/init.swsd*, located by default in the project's root directory. This file is loaded in the `sws::DM::init()` constructor function and used to instantiate all of the data. As such, it should be the first function called in `main`.
 
 *swsDM* is interpreted by the function `sws::DM::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)`. This function splits the key/value pairs in the *swsDM* script into two `std::vector<std::string>` objects, which are then iterated through, generating the `sws::Data` objects into the game.
 
-The game is saved by calling `sws::DM::save_data(const std::string &sf)`, which creates a file with the name *sf.swsd* in the *saves* folder in the game directory containing the current value of every data in the game. This file can then be read and loaded into the game by calling `sws::DM::load_data(const std::string &sf)`, where `sf` is the name of the file without the *.swsd* suffix. 
+The game is saved by calling `sws::DM::save_data(const std::string &sf)`, which creates a file with the name *sf.swsd* in the *saves* folder in the game directory containing the current value of every data in the game. This file can then be read and loaded into the game by calling `sws::DM::load_data(const std::string &sf)`, where `sf` is the name of the file (the *saves/* directory and the *.swsd* file extension will automatically be applied so do not include those when passing the filename).
 
 ## Glossary
 `struct sws::Data` - Structure which defines all of the in-game data. Has two member variables, `std::string key` and `std::string value`, as well as setter functions for each.
@@ -68,7 +68,7 @@ The game is saved by calling `sws::DM::save_data(const std::string &sf)`, which 
 
 `std::vector<sws::Data*> data` - A vector object that stores all of the in-game data.
 
-`void sws::DM::DM()` - This function should be the very first thing you call in the main method of your game. This function calls `sws::DM::load_data(const std::string &sf)` on *baseDatas.swsd*, populating the `data` object and initializing all of the data in the game.
+`void sws::DM::DM()` - This function should be the very first thing you call in the main method of your game. This function calls `sws::DM::load_data(const std::string &sf)` on *saves/init.swsd*, populating the `data` object and initializing all of the data in the game.
 
 `void sws::DM::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)` - The function that interprets *swsDM* scripts. Uses a simple string splitting algorithm to separate data keys and values into separate `std::vector<std::string>` variables which are then iterated through to add or manipulate data. 
 
@@ -78,6 +78,6 @@ The game is saved by calling `sws::DM::save_data(const std::string &sf)`, which 
 
 `std::string sws::DM::view_data()` - This function returns the entire `data` list as a `std::string` object. 
 
-`void sws::DM::load_data(const std::string &sf)` - This function loads the file *sf.swsd* into the `std::ifstream file` object, which is then iterated through line by line. `sws::DM::parse(args)` is called on every line, and then the resulting vectors are iterated through to either `sws::DM::add_data(args)` if `sf` is equal to `"baseDatas"`; otherwise, `sws::DM::update_data(args)` is called instead. 
+`void sws::DM::load_data(const std::string &sf)` - This function loads the file *saves/sf.swsd* into the `std::ifstream file` object, which is then iterated through line by line. `sws::DM::parse(args)` is called on every line, and then the resulting vectors are iterated through to either `sws::DM::add_data(args)` if `sf` is equal to `"init"`; otherwise, `sws::DM::update_data(args)` is called instead. 
 
-`void sws::DM::save_data(const std::string &sf)` - This function loads the file *sf.swsd* into the `std::ofstream file` object, creating it if it does not already exist, and then writes the return value of `sws::DM::view_data()` to the file. 
+`void sws::DM::save_data(const std::string &sf)` - This function loads the file *saves/sf.swsd* into the `std::ofstream file` object, creating it if it does not already exist, and then writes the return value of `sws::DM::view_data()` to the file. 
