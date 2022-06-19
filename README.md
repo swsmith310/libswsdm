@@ -14,7 +14,7 @@ FLAG_B|0
 FLAG_C|0
 ```
 
-The pipe operator (|) takes two parameters, a data key on the left, and a data value on the right. Data keys should be kept at a maximum of 16 characters and must not exceed 32 characters. Data values can be any type, as they will be stored as a `std::string` variable in the actual data object, meaning that it's up to you to typecast values when applying them to variables in the C++ code. As of version 0.5.0 a collection of static methods are provided for casting basic numeric types (see glossary for more information).
+The pipe operator (|) takes two parameters, a data key on the left, and a data value on the right. Data keys should be kept at a maximum of 16 characters and must not exceed 32 characters. Data values can be any type, as they will be stored as a `std::string` variable in the actual data object, meaning that it's up to you to typecast values when applying them to variables in the C++ code. As of version 0.5.0 a collection of methods are provided for casting basic numeric types (see glossary for more information).
 
 Comments can be added to *.swsd* files using the hashtag character (#).
 
