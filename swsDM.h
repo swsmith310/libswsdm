@@ -27,16 +27,16 @@ namespace sws
 {
     struct Data
     {
-        std::string           key;
-        std::string           value;
+        std::string key;
+        std::string value;
         Data(const std::string &k="", const std::string &v=0);
-        void                  set_key(const std::string &k);   
-        void                  set_value(const std::string &v); 
-        static int            vtoi(const sws::Data *f);
-        static long           vtol(const sws::Data *f);
-        static unsigned int   vtou(const sws::Data *f);
-        static float          vtof(const sws::Data *f);
-        static double         vtod(const sws::Data *f);
+        void set_key(const std::string &k);   
+        void set_value(const std::string &v); 
+        int          vtoi();
+        long         vtol();
+        unsigned int vtou();
+        float        vtof();
+        double       vtod();
     };
     struct DM
     {

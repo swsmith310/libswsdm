@@ -28,11 +28,11 @@ sws::Data::Data(const std::string &k, const std::string &v)
 void sws::Data::set_key(const std::string &k) { key = k; }
 void sws::Data::set_value(const std::string &v) { value = v; }
 
-int sws::Data::vtoi(const sws::Data *f) { return std::stoi(f->value, NULL); }
-long sws::Data::vtol(const sws::Data *f) { return std::stol(f->value, NULL); }
-unsigned int sws::Data::vtou(const sws::Data *f) { return std::stoul(f->value, NULL); }
-float sws::Data::vtof(const sws::Data *f) { return std::stof(f->value, NULL); }
-double sws::Data::vtod(const sws::Data *f) { return std::stod(f->value, NULL); }
+int sws::Data::vtoi() { return std::stoi(value, NULL); }
+long sws::Data::vtol() { return std::stol(value, NULL); }
+unsigned int sws::Data::vtou() { return std::stoul(value, NULL); }
+float sws::Data::vtof() { return std::stof(value, NULL); }
+double sws::Data::vtod() { return std::stod(value, NULL); }
 
 sws::DM::DM()
 {
@@ -113,7 +113,7 @@ void sws::DM::save_data(const std::string &sf)
     int t1, t2, t3;
     sws::DM();
     sws::DM::load_data("test");
-    int x = sws::Data::vtoi(sws::DM::data[0]);
+    int x = sws::DM::data[0]->vtoi();
     std::cout << "CAST TO INT: " << x << std::endl;
     std::cout << sws::DM::view_data();
     std::cin >> t1;

@@ -34,7 +34,7 @@ There must be only one key/value pair per line, and there must be no spaces betw
 
 - Added comments.
 
-- Added static functions for casting data values to numeric types.
+- Added functions for casting data values to numeric types.
 
 ### 0.4.0
 
@@ -60,15 +60,15 @@ The game is saved by calling `sws::DM::save_data(std::string sf)`, which creates
 
 `struct sws::DM` - Static structure which defines objects and functions for saving, loading, and managing game data. 
 
-`int sws::Data::vtoi(const sws::Data *f)` - Static function that casts a data object's value to int. 
+`int sws::Data::vtoi()` - Function that casts a data object's value to int. 
 
-`long sws::Data::vtol(const sws::Data *f)` - Static function that casts a data object's value to long. 
+`long sws::Data::vtol()` - Function that casts a data object's value to long. 
 
-`unsigned int sws::Data::vtou(const sws::Data *f)` - Static function that casts a data object's value to unsigned int. 
+`unsigned int sws::Data::vtou()` - Function that casts a data object's value to unsigned int. 
 
-`float sws::Data::vtof(const sws::Data *f)` - Static function that casts a data object's value to float. 
+`float sws::Data::vtof()` - Function that casts a data object's value to float. 
 
-`double sws::Data::vtod(const sws::Data *f)` - Static function that casts a data object's value to double. 
+`double sws::Data::vtod()` - Function that casts a data object's value to double. 
 
 `std::vector<sws::Data*> data` - A vector object that stores all of the in-game data.
 
