@@ -30,6 +30,8 @@ There must be only one key/value pair per line, and there must be no spaces betw
 
 - Changed file extension to *.swsd*.
 
+- Changed initialization filename from *baseflags.swsd* to *init.swsd*.
+
 - Save files now use their own *saves* directory.
 
 - Added comments.
@@ -72,7 +74,7 @@ The game is saved by calling `sws::DM::save_flags(std::string sf)`, which create
 
 `std::vector<sws::Flag*> flags` - A vector object that stores all of the in-game flags.
 
-`void sws::DM::DM()` - This function should be the very first thing you call in the main method of your game. This function calls `sws::DM::load_flags(std::string sf)` on *baseFlags.swsd*, populating the `flags` object and initializing all of the data in the game.
+`void sws::DM::DM()` - This function should be the very first thing you call in the main method of your game. This function calls `sws::DM::load_flags(std::string sf)` on *init.swsd*, populating the `flags` object and initializing all of the data in the game.
 
 `void sws::DM::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)` - The function that interprets *swsDM* scripts. Uses a simple string splitting algorithm to separate flag keys and values into separate `std::vector<std::string>` variables which are then iterated through to add or manipulate flags. 
 
@@ -82,6 +84,6 @@ The game is saved by calling `sws::DM::save_flags(std::string sf)`, which create
 
 `std::string sws::DM::view_flags()` - This function returns the entire `flags` list as a `std::string` object. 
 
-`void sws::DM::load_flags(std::string sf)` - This function loads the file *saves/sf.swsd* into the `std::ifstream file` object, which is then iterated through line by line. `sws::DM::parse(args)` is called on every line, and then the resulting vectors are iterated through to either `sws::DM::add_flags(args)` if `sf` is equal to `"baseFlags"`; otherwise, `sws::DM::update_flags(args)` is called instead. 
+`void sws::DM::load_flags(std::string sf)` - This function loads the file *saves/sf.swsd* into the `std::ifstream file` object, which is then iterated through line by line. `sws::DM::parse(args)` is called on every line, and then the resulting vectors are iterated through to either `sws::DM::add_flags(args)` if `sf` is equal to `"init"`; otherwise, `sws::DM::update_flags(args)` is called instead. 
 
 `void sws::DM::save_flags(std::string sf)` - This function loads the file *saves/sf.swsd* into the `std::ofstream file` object, creating it if it does not already exist, and then writes the return value of `sws::DM::view_flags()` to the file. 
