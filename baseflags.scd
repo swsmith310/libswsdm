@@ -1,3 +1,0 @@
-FLAG_A|0
-FLAG_B|0
-FLAG_C|0
