@@ -51,7 +51,7 @@ There must be only one key/value pair per line, and there must be no spaces betw
 
 *swsDM* is interpreted by the function `sws::DM::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)`. This function splits the key/value pairs in the *swsDM* script into two `std::vector<std::string>` objects, which are then iterated through, generating the `sws::Flag` objects into the game.
 
-The game is saved by calling `sws::DM::save_flags(std::string sf)`, which creates a file with the name *sf.swsd* in the *saves* folder in the game directory containing the current value of every flag in the game. This file can then be read and loaded into the game by calling `sc::DM::load_flags(std::string sf)`, where `sf` is the name of the file without the *.swsd* suffix. 
+The game is saved by calling `sws::DM::save_flags(std::string sf)`, which creates a file with the name *sf.swsd* in the *saves* folder in the game directory containing the current value of every flag in the game. This file can then be read and loaded into the game by calling `sws::DM::load_flags(std::string sf)`, where `sf` is the name of the file without the *.swsd* suffix. 
 
 ## Glossary
 `struct sws::Flag` - Structure which defines all of the in-game flags. Has two member variables, `std::string key` and `std::string value`, as well as setter functions for each.
