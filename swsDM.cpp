@@ -77,7 +77,7 @@ std::string sws::DM::view_flags()
 
 void sws::DM::load_flags(const std::string &sf)
 {
-    std::ifstream file(sf + ".swsd");
+    std::ifstream file("saves/" + sf + ".swsd");
     try
     {
         std::string line;
@@ -102,7 +102,7 @@ void sws::DM::load_flags(const std::string &sf)
 
 void sws::DM::save_flags(const std::string &sf)
 {
-    std::ofstream saveFile(sf + ".swsd");
+    std::ofstream saveFile("saves/" + sf + ".swsd");
     saveFile << view_flags();
     saveFile.close();
 }
