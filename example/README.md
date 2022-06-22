@@ -2,7 +2,7 @@
 ## Developed by Spencer Smith (spencerwayne310@gmail.com)
 ### Last updated 19 June 2022
 
-*libswsdm* is a very simple specification designed primarily for saving and loading game data. The project uses only standard C++ and is therefore highly portable. 
+*libswsdm* is a very simple library designed primarily for saving and loading game data. The project uses only standard C++ and is therefore highly portable. 
 
 This example is meant as a demonstration of how *libswsdm* can be used in your project. Building this example requires Raylib, which can be found at https://github.com/raysan5/raylib.git. The example also expects that the required headers and libraries are in your system's include and lib paths, respectively.
 
