@@ -2,7 +2,7 @@
 ## Developed by Spencer Smith (spencerwayne310@gmail.com)
 ### Last updated 19 June 2022
 
-*libswsdm* is a very simple specification designed primarily for saving and loading game data. The project uses only standard C++ and is therefore highly portable. 
+*libswsdm* is a very simple library designed primarily for saving and loading game data. The project uses only standard C++ and is therefore highly portable. 
 
 ## Syntax
 The structure of a *.swsd* file is as follows:
