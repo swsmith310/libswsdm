@@ -43,7 +43,6 @@ namespace sws
         static void               add_data(const std::string &k, const std::string &v=0);
         static void               update_data(const std::string &k, const std::string &v=0);
         static void               update_data(const int &i, const std::string &v=0);
-        static std::string        view_data();
         static void               load_data(const std::string &sf);
         static void               save_data(const std::string &sf);
         static int                vtoi(const int &i);

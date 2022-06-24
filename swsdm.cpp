@@ -17,6 +17,11 @@
 
 #include "swsdm.h"
 
+std::ostream& operator<<(std::ostream& os, sws::Data f) {
+   os << f.key << "|" << f.value << std::endl;
+   return os;
+}
+
 std::vector<std::unique_ptr<sws::Data>> sws::DM::data;
 sws::Data::Data(const std::string &k, const std::string &v) { set_key(k); set_value(v); }
 void sws::Data::set_key(const std::string &k) { key = k; }
@@ -49,12 +54,6 @@ void sws::DM::update_data(const std::string &k, const std::string &v) {
 
 void sws::DM::update_data(const int &i, const std::string &v) { data[i]->set_value(v); }
 
-std::string sws::DM::view_data() {
-    std::string fs;
-    for (auto& f : data) fs.append(f->key + "|" + f->value + "\n");
-    return fs;
-}
-
 void sws::DM::load_data(const std::string &sf) {
     std::ifstream file("saves/" + sf + ".swsd");
     try {
@@ -78,7 +77,7 @@ void sws::DM::load_data(const std::string &sf) {
 
 void sws::DM::save_data(const std::string &sf) {
     std::ofstream saveFile("saves/" + sf + ".swsd");
-    saveFile << view_data(); saveFile.close();
+    for (auto& f: data) saveFile << *f.get();
 }
 
 // Uncomment and compile for basic testing
@@ -88,7 +87,8 @@ void sws::DM::save_data(const std::string &sf) {
     sws::DM::load_data("test");
     int x = sws::DM::vtoi(0);
     std::cout << "CAST TO INT: " << x << std::endl;
-    std::cout << sws::DM::view_data();
+    for (auto& f: sws::DM::data)
+        std::cout << *f.get(); 
     std::cin >> t1; std::cin >> t2; std::cin >> t3;
     // UPDATE BY KEY
     sws::DM::update_data("FLAG_A", std::to_string(t1));

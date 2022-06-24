@@ -26,6 +26,7 @@ There must be only one key/value pair per line, and there must be no spaces betw
 
 - Added STL memory header to improve performance.
 - Changed `sws::DM::data` vector to `std::unique_ptr<sws::Data>`type.
+- Removed `sws::DM::view_data()` in favor of operator overloading.
 
 ### 0.6.0
 
@@ -88,8 +89,6 @@ The game is saved by calling `sws::DM::save_data(const std::string &sf)`, which 
 
 `void sws::DM::update_data(const int &i, const std::string &v)` - This function allows you to update an individual data object's value by index. This version of the function should be preferred in most cases.
 
-`std::string sws::DM::view_data()` - This function returns the entire `data` list as a `std::string` object. 
-
 `void sws::DM::load_data(const std::string &sf)` - This function loads the file *saves/sf.swsd* into the `std::ifstream file` object, which is then iterated through line by line. `sws::DM::parse(args)` is called on every line, and then the resulting vectors are iterated through to either `sws::DM::add_data(args)` if `sf` is equal to `"init"`; otherwise, `sws::DM::update_data(args)` is called instead. 
 
-`void sws::DM::save_data(const std::string &sf)` - This function loads the file *saves/sf.swsd* into the `std::ofstream file` object, creating it if it does not already exist, and then writes the return value of `sws::DM::view_data()` to the file. 
+`void sws::DM::save_data(const std::string &sf)` - This function loads the file *saves/sf.swsd* into the `std::ofstream file` object, creating it if it does not already exist, and then uses the overloaded `<<` operator to write key value pairs to the script in the proper format.
