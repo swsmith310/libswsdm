@@ -10,6 +10,9 @@ public:
         this->x = x;
         this->y = y;
     }
+    ~Player() {
+        UnloadTexture(img);
+    }
     void move() {
         if (IsKeyDown(KEY_RIGHT)) {
             x += 1.0f;
