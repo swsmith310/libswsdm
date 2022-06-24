@@ -1,4 +1,4 @@
- /* swsDM - A simple standard for managing game data
+ /* libswsdm - A simple library for saving and loading game data
   * Copyright (C) 2020-2022 Spencer Smith <spencerwayne310@gmail.com>
   *
   * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 
 #include "swsdm.h"
 
-std::vector<sws::Data*> sws::DM::data;
+std::vector<std::unique_ptr<sws::Data>> sws::DM::data;
 sws::Data::Data(const std::string &k, const std::string &v) { set_key(k); set_value(v); }
 void sws::Data::set_key(const std::string &k) { key = k; }
 void sws::Data::set_value(const std::string &v) { value = v; }
@@ -39,12 +39,12 @@ void sws::DM::parse(std::string const& s, const char d, std::vector<std::string>
 }
 
 void sws::DM::add_data(const std::string &k, const std::string &v) {
-    Data* f = new Data(k, v); data.push_back(f);
+     data.emplace_back(std::make_unique<sws::Data>(k, v));
 } 
 
 void sws::DM::update_data(const std::string &k, const std::string &v) {
     std::transform(data.begin(), data.end(), data.begin(),
-            [k,v](auto& f){ if (f->key == k) f->set_value(v); return f; });
+            [k,v](auto& f){ if (f->key == k) f->set_value(v); return std::move(f); });
 }
 
 void sws::DM::update_data(const int &i, const std::string &v) { data[i]->set_value(v); }
@@ -65,10 +65,10 @@ void sws::DM::load_data(const std::string &sf) {
             std::vector<std::string> values;
             parse(line, '|', keys, values);
             for (auto& k : keys) {  
-                std::string value;
-                for (auto& v: values) value = v;
-                if (sf == "init") add_data(k, value);
-                else              update_data(k, value);
+                for ( auto& v: values) {
+                    if (sf == "init") add_data(k, v);
+                    else              update_data(k, v);
+                }
             }
         }
     }

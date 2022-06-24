@@ -1,8 +1,8 @@
-# libswsdm v0.6.0
+# libswsdm v0.7.0
 ## Developed by Spencer Smith (spencerwayne310@gmail.com)
-### Last updated 22 June 2022
+### Last updated 24 June 2022
 
-*libswsdm* is a very simple library designed primarily for saving and loading game data. The project uses only standard C++ and is therefore highly portable. 
+*libswsdm* is a very simple specification designed primarily for saving and loading game data. The project uses only standard C++17 and is therefore highly portable. 
 
 ## Syntax
 The structure of a *.swsd* file is as follows:
@@ -21,6 +21,11 @@ Comments can be added to *.swsd* files using the hashtag character (#).
 There must be only one key/value pair per line, and there must be no spaces between the parameters and pipe. 
 
 ## Changelog
+
+### 0.7.0
+
+- Added STL memory header to improve performance.
+- Changed `sws::DM::data` vector to `std::unique_ptr<sws::Data>`type.
 
 ### 0.6.0
 
@@ -61,7 +66,7 @@ The game is saved by calling `sws::DM::save_data(const std::string &sf)`, which 
 
 `struct sws::DM` - Static structure which defines objects and functions for saving, loading, and managing game data. 
 
-`std::vector<sws::Data*> data` - A vector object that stores all of the in-game data.
+`std::vector<std::unique_ptr<sws::Data>> data` - A vector object that stores all of the in-game data as unique pointers.
 
 `void sws::DM::DM()` - This function should be the very first thing you call in the main method of your game. This function calls `sws::DM::load_data(const std::string &sf)` on *init.swsd*, populating the `data` object and initializing all of the data in the game.
 
@@ -77,9 +82,9 @@ The game is saved by calling `sws::DM::save_data(const std::string &sf)`, which 
 
 `void sws::DM::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2)` - The function that interprets *.swsd* files. Uses a simple string splitting algorithm to separate data keys and values into separate `std::vector<std::string>` variables which are then iterated through to add or manipulate data. 
 
-`void sws::DM::add_data(const std::string &k, const std::string &v)` - This function creates a `new sws::Data(const std::string &k, const std::string &v)` object `f` and then calls `data.push_back(f)`.
+`void sws::DM::add_data(const std::string &k, const std::string &v)` - This function creates a `new std::unique_ptr<sws::Data>` and pushes it onto the vector.
 
-`void sws::DM::update_data(const std::string &k, const std::string &v)` - This function modifies the value of `sws::Data` objects by iterating through the `data` list using `std::transform` to find the key that matches `k` and changing the value of that data to `v`. This version is primarily intended to be used in `sws::DM::load_data` and the one detailed below should be preferred in most cases. 
+`void sws::DM::update_data(const std::string &k, const std::string &v)` - This function modifies the value of `std::unique_ptr<sws::Data>` objects by iterating through the `data` list using `std::transform` to find the key that matches `k` and changing the value of that data to `v`. This version is primarily intended to be used in `sws::DM::load_data` and the one detailed below should be preferred in most cases. 
 
 `void sws::DM::update_data(const int &i, const std::string &v)` - This function allows you to update an individual data object's value by index. This version of the function should be preferred in most cases.
 
