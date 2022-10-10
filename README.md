@@ -91,7 +91,7 @@ The game is saved by calling `sws::DM::save_data(const std::string &sf)`, which 
 
 `void sws::DM::add_data(const std::string &k, const std::string &v)` - This function creates a `new std::unique_ptr<sws::Data>` and pushes it onto the vector.
 
-`void sws::DM::update_data(const int &i, const std::string &v)` - This function allows you to update an individual data object's value by index. This version of the function should be preferred in most cases.
+`void sws::DM::update_data(const int &i, const std::string &v)` - This function allows you to update an individual data object's value by index.
 
 `void sws::DM::load_data(const std::string &sf)` - This function loads the file *saves/sf.swsd* into the `std::ifstream file` object, which is then iterated through line by line. `sws::DM::parse(args)` is called on every line, and then the resulting vectors are iterated through to either `sws::DM::add_data(args)` if `sf` is equal to `"init"`; otherwise, `sws::DM::update_data(args)` is called instead. 
 
