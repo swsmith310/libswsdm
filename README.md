@@ -1,4 +1,4 @@
-# libswsdm v0.7.0
+# libswsdm v0.8.0
 ## Developed by Spencer Smith (spencerwayne310@gmail.com)
 ### Last updated 9 October 2022
 
