@@ -41,7 +41,6 @@ namespace sws
         static std::vector<std::unique_ptr<sws::Data>> data;
         static void               parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2);
         static void               add_data(const std::string &k, const std::string &v=0);
-        static void               update_data(const std::string &k, const std::string &v=0);
         static void               update_data(const int &i, const std::string &v=0);
         static void               load_data(const std::string &sf);
         static void               save_data(const std::string &sf);

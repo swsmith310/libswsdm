@@ -47,11 +47,6 @@ void sws::DM::add_data(const std::string &k, const std::string &v) {
      data.emplace_back(std::make_unique<sws::Data>(k, v));
 } 
 
-void sws::DM::update_data(const std::string &k, const std::string &v) {
-    std::transform(data.begin(), data.end(), data.begin(),
-            [k,v](auto& f){ if (f->key == k) f->set_value(v); return std::move(f); });
-}
-
 void sws::DM::update_data(const int &i, const std::string &v) { data[i]->set_value(v); }
 
 void sws::DM::load_data(const std::string &sf) {
@@ -63,14 +58,13 @@ void sws::DM::load_data(const std::string &sf) {
             std::vector<std::string> keys;
             std::vector<std::string> values;
             parse(line, '|', keys, values);
-            for (auto& k : keys) {  
-                for ( auto& v: values) {
-                    if (sf == "init") add_data(k, v);
-                    else              update_data(k, v);
-                }
+            for (int i = 0; i < keys.size(); ++i){
+                if (sf == "init") add_data(keys[i], values[i]);
+                else              update_data(i, values[i]);
             }
         }
     }
+    
     catch(const std::exception& e) { std::cerr << "SAVE FILE CORRUPTED" << '\n'; }
     file.close();
 }
