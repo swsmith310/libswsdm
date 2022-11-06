@@ -1,5 +1,5 @@
  /* libswsdm - A simple library for saving and loading game data
-  * Copyright (C) 2020-2022 Spencer Smith <spencerwayne310@gmail.com>
+  * Copyright (C) 2020-2022 Spencer W. Smith <spencerwayne310@gmail.com>
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -17,37 +17,26 @@
 
 #include "swsdm.h"
 
-std::ostream& operator<<(std::ostream& os, sws::Data f) {
-   os << f.key << "|" << f.value << std::endl;
-   return os;
-}
+std::unordered_map<std::string, std::string> sws::DM::data;
 
-std::vector<std::unique_ptr<sws::Data>> sws::DM::data;
-sws::Data::Data(const std::string &k, const std::string &v) { set_key(k); set_value(v); }
-void sws::Data::set_key(const std::string &k) { key = k; }
-void sws::Data::set_value(const std::string &v) { value = v; }
-
-int sws::DM::vtoi(const int &i) { return std::stoi(data[i]->value, NULL); }
-long sws::DM::vtol(const int &i) { return std::stol(data[i]->value, NULL); }
-unsigned int sws::DM::vtou(const int &i) { return std::stoul(data[i]->value, NULL); }
-float sws::DM::vtof(const int &i) { return std::stof(data[i]->value, NULL); }
-double sws::DM::vtod(const int &i) { return std::stod(data[i]->value, NULL); }
+int sws::DM::vtoi(const std::string &k) { return std::stoi(data[k], NULL); }
+long sws::DM::vtol(const std::string &k) { return std::stol(data[k], NULL); }
+unsigned int sws::DM::vtou(const std::string &k) { return std::stoul(data[k], NULL); }
+float sws::DM::vtof(const std::string &k) { return std::stof(data[k], NULL); }
+double sws::DM::vtod(const std::string &k) { return std::stod(data[k], NULL); }
 
 sws::DM::DM() { load_data("init"); }
 
-void sws::DM::parse(std::string const& s, const char d, std::vector<std::string>& o1, std::vector<std::string>& o2) {
+// Maybe more efficient if it returned a pair?
+void sws::DM::parse(std::string const& s, const char d, std::string& o1, std::string& o2) {
     size_t start; size_t end = 0;
     while ((start = s.find_first_not_of(d, end)) != std::string::npos) {
         end = s.find(d, start);
-        end > 32 ? o2.push_back(s.substr(start, end - start)) : o1.push_back(s.substr(start, end - start));
+        end > 32 ? o2.assign(s.substr(start, end - start)) : o1.assign(s.substr(start, end - start));
     }
 }
 
-void sws::DM::add_data(const std::string &k, const std::string &v) {
-     data.emplace_back(std::make_unique<sws::Data>(k, v));
-} 
-
-void sws::DM::update_data(const int &i, const std::string &v) { data[i]->set_value(v); }
+void sws::DM::update_data(const std::string &k, const std::string &v) { data.insert_or_assign(k, v); }
 
 void sws::DM::load_data(const std::string &sf) {
     std::ifstream file("saves/" + sf + ".swsd");
@@ -55,23 +44,21 @@ void sws::DM::load_data(const std::string &sf) {
         std::string line;
         while(std::getline(file, line)) {
             if (line[0] == '#') continue;
-            std::vector<std::string> keys;
-            std::vector<std::string> values;
-            parse(line, '|', keys, values);
-            for (int i = 0; i < keys.size(); ++i){
-                if (sf == "init") add_data(keys[i], values[i]);
-                else              update_data(i, values[i]);
-            }
+            std::string k;
+            std::string v;
+            parse(line, '|', k, v);
+            update_data(k, v);
         }
     }
-    
     catch(const std::exception& e) { std::cerr << "SAVE FILE CORRUPTED" << '\n'; }
     file.close();
 }
 
 void sws::DM::save_data(const std::string &sf) {
     std::ofstream saveFile("saves/" + sf + ".swsd");
-    for (auto& f: data) saveFile << *f.get();
+    for (const std::pair<const std::string, std::string>& d : data) {
+        saveFile << d.first << "|" << d.second << std::endl;
+    }
 }
 
 // Uncomment and compile for basic testing
@@ -79,15 +66,14 @@ void sws::DM::save_data(const std::string &sf) {
     int t1, t2, t3;
     sws::DM();
     sws::DM::load_data("test");
-    int x = sws::DM::vtoi(0);
+    int x = sws::DM::vtoi("FLAG_A");
     std::cout << "CAST TO INT: " << x << std::endl;
-    for (auto& f: sws::DM::data)
-        std::cout << *f.get(); 
+    for (const std::pair<const std::string, std::string>& d: sws::DM::data)
+        std::cout << d.first << "|" << d.second << std::endl; 
     std::cin >> t1; std::cin >> t2; std::cin >> t3;
-    // UPDATE BY KEY
+    
     sws::DM::update_data("FLAG_A", std::to_string(t1));
-    // UPDATE BY INDEX
-    sws::DM::update_data(1, std::to_string(t2));
+    sws::DM::update_data("FLAG_B", std::to_string(t2));
     sws::DM::update_data("FLAG_C", std::to_string(t3));
     sws::DM::save_data("test");
     return 0;
