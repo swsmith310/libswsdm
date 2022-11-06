@@ -92,7 +92,7 @@ As an interesting quirk of the recent change to `std::unordered_map`, the save f
 
 `double sws::DM::vtod(const std::string &k)` - Static function that casts `sws::DM::data[k]` value to double. 
 
-`void sws::DM::parse(std::string const& s, const char d, std::string& o1, std::string& o2)` - The function that interprets *.swsd* files. Uses a simple string splitting algorithm to separate data keys and values into separate `std::string` objects which are then iterated through to add or manipulate data. 
+`void sws::DM::parse(std::string const& s, const char d, std::string& o1, std::string& o2)` - The function that interprets *.swsd* files. Uses a simple string splitting algorithm to separate data keys and values into separate `std::string` objects which are then used to add or manipulate data. 
 
 `void sws::DM::update_data(const int &k, const std::string &v)` - This function allows you to update an individual data object's value by key.
 
