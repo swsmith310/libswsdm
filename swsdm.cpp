@@ -1,4 +1,4 @@
- /* libswsdm - A simple library for saving and loading game data
+ /* libswsdm - A simple and lightweight library for saving and loading game data
   * Copyright (C) 2020-2022 Spencer W. Smith <spencerwayne310@gmail.com>
   *
   * This program is free software: you can redistribute it and/or modify
