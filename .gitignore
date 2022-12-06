@@ -1,3 +1,2 @@
-.vscode
-SCDM
-SCDM.o
+libswsdm.so
+example/example
