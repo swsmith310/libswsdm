@@ -1,8 +1,6 @@
-# TODO: UPDATE EXAMPLE
-
-# libswsdm v0.7.0
+# libswsdm v1.0.0
 ## Developed by Spencer Smith (spencerwayne310@gmail.com)
-### Last updated 24 June 2022
+### Last updated 6 December 2022
 
 *libswsdm* is a very simple specification designed primarily for saving and loading game data. The project uses only standard C++ and is therefore highly portable. 
 
