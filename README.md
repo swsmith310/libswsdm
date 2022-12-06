@@ -1,28 +1,44 @@
 # libswsdm v1.0.0
 ## Developed by Spencer W. Smith (spencerwayne310@gmail.com)
-### Last updated 6 November 2022
+### Last updated 6 December 2022
 
-*libswsdm* is a very simple specification designed primarily for saving and loading game data. The project uses only standard C++17 and is therefore highly portable. By default this project is compiled using clang, however you can also use gcc if you prefer.
+*libswsdm* is a very simple scripting language designed primarily for saving and loading game data. This implementation uses only standard C++17 and is therefore highly portable. By default this project is compiled using clang, however you can also use gcc if you prefer.
+
+Implementations in other languages are currently in the works.
 
 ## Syntax
-The structure of a *.swsd* file is as follows:
+*swsd* scripts are written to a special file known as *init.swsd*, which will be used to initialize the game data. The structure of *init.swsd* is as follows:
 
 ```
 # COMMENT
-FLAG_A|0
-FLAG_B|0
-FLAG_C|0
+DEF FLAG:
+    A=0
+    B=0
+    C=0
+END FLAG
 ```
 
-The pipe operator (|) takes two parameters, a data key on the left, and a data value on the right. Data keys should be kept at a maximum of 16 characters and must not exceed 32 characters. Data values can be any type, as they will be stored as a `std::string` variable in the actual data object, meaning that it's up to you to typecast values when applying them to variables in the C++ code. As of version 0.5.0 a collection of static methods are provided for casting basic numeric types (see glossary for more information).
+The DEF line defines a prefix, which will be attached to each name within the definition block. These are the data keys, and anything after an assignment operator (=) will be a data value. The definition block ends with the END line.
 
-Comments can be added to *.swsd* files using the hashtag character (#).
+Comments can be added to *init.swsd* files using the hashtag character (#). These will be ignored by the load function and will not be written to the generated save file.
 
-There must be only one key/value pair per line, and there must be no spaces between the parameters and pipe. 
+Save files generated will contain one key/value pair per line, and there must be no spaces between the parameters and assignment operator. For the example above, the generated save file would appear as:
+
+```
+FLAG:C=0
+FLAG:B=0
+FLAG:A=0
+```
 
 ## Changelog
 
 ### 1.0.0
+
+- Developed a more formal scripting language for initialization files.
+- Replaced pipe operator (|) with a more traditional assignment operator (=).
+- Removed `sws::DM::parse()` from the struct, instead defined as a separate function.
+
+### 0.9.0
 
 - Removed `sws::Data` struct.
 - Replaced `std::vector` with `std::unordered_map` for improved performance.
@@ -80,7 +96,7 @@ As an interesting quirk of the recent change to `std::unordered_map`, the save f
 ## Glossary
 `std::unordered_map<std::string, std::string> sws::DM::data` - Unordered map containing all the key/value pairs representing game data.
 
-`void sws::DM::DM()` - This function should be the very first thing you call in the main method of your game. This function calls `sws::DM::load_data(const std::string &sf)` on *init.swsd*, populating the `data` object and initializing all of the data in the game.
+`void sws::DM::DM()` - This function should be the very first thing you call in the main method of your game. Initializes all game data. 
 
 `int sws::DM::vtoi(const std::string &k)` - Static function that casts `sws::DM::data[k]` value to int. 
 
@@ -92,9 +108,9 @@ As an interesting quirk of the recent change to `std::unordered_map`, the save f
 
 `double sws::DM::vtod(const std::string &k)` - Static function that casts `sws::DM::data[k]` value to double. 
 
-`void sws::DM::parse(std::string const& s, const char d, std::string& o1, std::string& o2)` - The function that interprets *.swsd* files. Uses a simple string splitting algorithm to separate data keys and values into separate `std::string` objects which are then used to add or manipulate data. 
-
 `void sws::DM::update_data(const int &k, const std::string &v)` - This function allows you to update an individual data object's value by key.
+
+`void sws::DM::load_init()` - This function is used by the constructor to load in the initial file.
 
 `void sws::DM::load_data(const std::string &sf)` - This function loads the file *saves/sf.swsd* into the `std::ifstream file` object, which is then iterated through line by line. `sws::DM::parse(args)` is called on every line, and then the resulting vectors are iterated through to either `sws::DM::add_data(args)` if `sf` is equal to `"init"`; otherwise, `sws::DM::update_data(args)` is called instead. 
 

@@ -27,10 +27,10 @@ namespace sws
 {
     struct DM
     {
-        DM();
         static std::unordered_map<std::string, std::string> data;
-        static void               parse(std::string const& s, const char d, std::string& o1, std::string& o2);
+        DM();
         static void               update_data(const std::string &k, const std::string &v=0);
+        static void               load_init();
         static void               load_data(const std::string &sf);
         static void               save_data(const std::string &sf);
         static int                vtoi(const std::string &k);
