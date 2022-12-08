@@ -1,6 +1,6 @@
-# libswsdm v1.0.0
+# libswsdm v1.0.1
 ## Developed by Spencer W. Smith (spencerwayne310@gmail.com)
-### Last updated 6 December 2022
+### Last updated 8 December 2022
 
 *libswsdm* is a very simple scripting language designed primarily for saving and loading game data. This implementation uses only standard C++17 and is therefore highly portable. By default this project is compiled using clang, however you can also use gcc if you prefer.
 
@@ -18,7 +18,7 @@ DEF FLAG:
 END FLAG
 ```
 
-The DEF line defines a prefix, which will be attached to each name within the definition block. These are the data keys, and anything after an assignment operator (=) will be a data value. The definition block ends with the END line.
+The DEF line defines a prefix, which will be attached to each name within the definition block. These are the data keys, and anything after an assignment operator (=) will be a data value. The definition block ends with the END line. Data types are not specified in the *swsd* script and values are stored as `std::string` objects in the program, which can be converted to other data types using the various functions included within the class. See glossary below for more details on these functions.
 
 Comments can be added to *init.swsd* files using the hashtag character (#). These will be ignored by the load function and will not be written to the generated save file.
 
@@ -30,7 +30,27 @@ FLAG:B=0
 FLAG:A=0
 ```
 
+An example of using these values in C++:
+
+```
+int c = sws::DM::vtoi("FLAG:C");
+```
+
+As of version 1.0.1, a new data structure, `sws::vec2`, has been introduced. `sws::vec2` can be defined in the *swsd* script as such:
+
+```
+DEF FLAG:
+    VEC2=X,Y
+END FLAG
+```
+
+Note the lack of spaces between X and Y values, which are comma separated. The structure is parsed by the `sws::DM::vtov2()` function, detailed below.
+
 ## Changelog
+
+### 1.0.1
+
+- Introduced `sws::vec2` data structure.
 
 ### 1.0.0
 
@@ -87,7 +107,7 @@ FLAG:A=0
 ## Usage Summary
 *libswsdm* is used to initialize, save, and load all data in the program. The data for a fresh game is written in the file *saves/init.swsd*, which should be located in your game's root directory. This file is loaded in the `sws::DM::init()` constructor function and used to instantiate all of the data. As such, it should be the first function called in `main`.
 
-*libswsdm* is interpreted by the function `sws::DM::parse(args)`. This function splits the key/value pairs in the *.swsd* file into `std::string` objects, which are then iterated through to populate the `std::unordered_map`.
+*libswsdm* is interpreted by the function `parse(args)` (as of version 1.0.0 this is no longer a part of the main struct). This function splits the key/value pairs in the *.swsd* file into `std::string` objects, which are then iterated through to populate the `std::unordered_map`.
 
 The game is saved by calling `sws::DM::save_data(const std::string &sf)`, which creates a file with the name *sf.swsd* in the *saves* folder in the game directory containing the current value of every data in the game. This file can then be read and loaded into the game by calling `sws::DM::load_data(const std::string &sf)` (the *saves/* directory and *.swsd* file extension are automatically applied and therefore should not be included in `sf`). Note that any comments in your *init.swsd* file will not be included in the save file created by the save function.
 
@@ -108,6 +128,8 @@ As an interesting quirk of the recent change to `std::unordered_map`, the save f
 
 `double sws::DM::vtod(const std::string &k)` - Static function that casts `sws::DM::data[k]` value to double. 
 
+`sws::vec2* sws::DM::vtov2(const std::string &k)` - Parses the `sws::vec2` value at `sws::DM::data[k]` and returns a pointer.
+
 `void sws::DM::update_data(const int &k, const std::string &v)` - This function allows you to update an individual data object's value by key.
 
 `void sws::DM::load_init()` - This function is used by the constructor to load in the initial file.
@@ -115,3 +137,7 @@ As an interesting quirk of the recent change to `std::unordered_map`, the save f
 `void sws::DM::load_data(const std::string &sf)` - This function loads the file *saves/sf.swsd* into the `std::ifstream file` object, which is then iterated through line by line. `sws::DM::parse(args)` is called on every line, and then the resulting vectors are iterated through to either `sws::DM::add_data(args)` if `sf` is equal to `"init"`; otherwise, `sws::DM::update_data(args)` is called instead. 
 
 `void sws::DM::save_data(const std::string &sf)` - This function loads the file *saves/sf.swsd* into the `std::ofstream file` object, creating it if it does not already exist and then prints the key/value pairs from `sws::DM::data` to the file.
+
+`sws::vec2` - A data structure consisting of x and y values.
+
+`sws::vec2::to_string` - Returns a stringified version of the `sws::vec2` variable to be written to the *swsd* script.

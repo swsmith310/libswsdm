@@ -25,6 +25,13 @@
 
 namespace sws
 {
+    struct vec2{
+        float x;
+        float y;
+        vec2(float x, float y);
+        std::string to_string();
+    };
+
     struct DM
     {
         static std::unordered_map<std::string, std::string> data;
@@ -38,6 +45,7 @@ namespace sws
         static unsigned int       vtou(const std::string &k);
         static float              vtof(const std::string &k);
         static double             vtod(const std::string &k);
+        static sws::vec2*         vtov2(const std::string &k);
     };
 }
 #endif

@@ -1,41 +1,40 @@
 #include <raylib.h>
 #include <swsdm.h>
 
+
 class Player {
-    float x;
-    float y;
+    sws::vec2* pos;
     Texture2D img = LoadTexture("player.png");
 public:
-    Player(float x, float y) {
-        this->x = x;
-        this->y = y;
+    Player() {
+        pos = sws::DM::vtov2("PLAYER:POS");
     }
     ~Player() {
         UnloadTexture(img);
     }
     void move() {
         if (IsKeyDown(KEY_RIGHT)) {
-            x += 1.0f;
-            sws::DM::update_data("PLAYER:X", std::to_string(x));
+            pos->x += 1.0f;
+            sws::DM::update_data("PLAYER:POS", pos->to_string());
         }
         if (IsKeyDown(KEY_LEFT)) {
-            x -= 1.0f;
-            sws::DM::update_data("PLAYER:X", std::to_string(x));
+            pos->x -= 1.0f;
+            sws::DM::update_data("PLAYER:POS", pos->to_string());
         }
         if (IsKeyDown(KEY_DOWN)) {
-            y += 1.0f;
-            sws::DM::update_data("PLAYER:Y", std::to_string(y));
+            pos->y += 1.0f;
+            sws::DM::update_data("PLAYER:POS", pos->to_string());
         }
         if (IsKeyDown(KEY_UP)) {
-            y -= 1.0f;
-            sws::DM::update_data("PLAYER:Y", std::to_string(y));
+            pos->y -= 1.0f;
+            sws::DM::update_data("PLAYER:POS", pos->to_string());
         }
     }
     void draw() {
-        DrawTexture(img, x, y, MAGENTA);
+        DrawTexture(img, pos->x, pos->y, MAGENTA);
     }
-    void setPos(float x, float y) {
-        this->x = x; this->y = y;
+    void setPos(sws::vec2* pos) {
+        this->pos = pos;
     }
 };
 
@@ -44,17 +43,17 @@ void Load(Player* p) {
         if (IsKeyPressed(KEY_F1)) {
             std::cout << "File 1 loaded" << std::endl;
             sws::DM::load_data("save1");
-            p->setPos(sws::DM::vtof("PLAYER:X"), sws::DM::vtof("PLAYER:Y"));
+            p->setPos(sws::DM::vtov2("PLAYER:POS"));
         }
         if (IsKeyPressed(KEY_F2)) {
             std::cout << "File 2 loaded" << std::endl;
             sws::DM::load_data("save2");
-            p->setPos(sws::DM::vtof("PLAYER:X"), sws::DM::vtof("PLAYER:Y"));
+            p->setPos(sws::DM::vtov2("PLAYER:POS"));
         }
         if (IsKeyPressed(KEY_F3)) {
             std::cout << "File 3 loaded" << std::endl;
             sws::DM::load_data("save3");
-            p->setPos(sws::DM::vtof("PLAYER:X"), sws::DM::vtof("PLAYER:Y"));
+            p->setPos(sws::DM::vtov2("PLAYER:POS"));
         }
     }
 }
@@ -77,10 +76,11 @@ void Save(void) {
 }
 
 int main(void) {
-    InitWindow(640, 480, "libswsdm example");
-    SetTargetFPS(60);
     sws::DM();
-    Player *p = new Player(sws::DM::vtof("PLAYER:X"), sws::DM::vtof("PLAYER:Y"));
+    const sws::vec2* WIN_SIZE = sws::DM::vtov2("WIN:SIZE");
+    InitWindow(WIN_SIZE->x, WIN_SIZE->y, "libswsdm example");
+    SetTargetFPS(60);
+    Player *p = new Player();
     while(!WindowShouldClose()) {
         p->move();
         BeginDrawing();

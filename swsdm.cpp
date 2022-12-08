@@ -17,16 +17,6 @@
 
 #include "swsdm.h"
 
-std::unordered_map<std::string, std::string> sws::DM::data;
-
-int sws::DM::vtoi(const std::string &k) { return std::stoi(data[k], NULL); }
-long sws::DM::vtol(const std::string &k) { return std::stol(data[k], NULL); }
-unsigned int sws::DM::vtou(const std::string &k) { return std::stoul(data[k], NULL); }
-float sws::DM::vtof(const std::string &k) { return std::stof(data[k], NULL); }
-double sws::DM::vtod(const std::string &k) { return std::stod(data[k], NULL); }
-
-sws::DM::DM() { load_init(); }
-
 // Maybe more efficient if it returned a pair?
 void parse(std::string const& s, const char d, std::string& o1, std::string& o2) {
     size_t start; size_t end = 0;
@@ -41,6 +31,32 @@ std::string ltrim(const std::string &s) {
     size_t start = s.find_first_not_of(WHITESPACE);
     return (start == std::string::npos) ? "" : s.substr(start);
 }
+
+sws::vec2::vec2(float x, float y) {
+    this->x = x;
+    this->y = y;
+}
+
+std::string sws::vec2::to_string() {
+    return std::to_string(x) + "," + std::to_string(y);
+}
+
+std::unordered_map<std::string, std::string> sws::DM::data;
+
+int sws::DM::vtoi(const std::string &k) { return std::stoi(data[k], NULL); }
+long sws::DM::vtol(const std::string &k) { return std::stol(data[k], NULL); }
+unsigned int sws::DM::vtou(const std::string &k) { return std::stoul(data[k], NULL); }
+float sws::DM::vtof(const std::string &k) { return std::stof(data[k], NULL); }
+double sws::DM::vtod(const std::string &k) { return std::stod(data[k], NULL); }
+
+sws::vec2* sws::DM::vtov2(const std::string &k) {
+    std::string x;
+    std::string y;
+    parse(data[k], ',', x, y);
+    return new vec2(std::stof(x), std::stof(y));
+}
+
+sws::DM::DM() { load_init(); }
 
 void sws::DM::update_data(const std::string &k, const std::string &v) { data.insert_or_assign(k, v); }
 
