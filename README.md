@@ -1,8 +1,8 @@
-# libswsdm v1.0.1
+# libswsdm v2.0.0
 ## Developed by Spencer W. Smith (spencerwayne310@gmail.com)
 ### Last updated 8 December 2022
 
-*libswsdm* is a very simple scripting language designed primarily for saving and loading game data. This implementation uses only standard C++17 and is therefore highly portable. By default this project is compiled using clang, however you can also use gcc if you prefer.
+*libswsdm* is a very simple, typesafe scripting language designed primarily for saving and loading game data. This implementation uses only standard C++17 and is therefore highly portable. By default this project is compiled using clang, however you can also use gcc if you prefer.
 
 Implementations in other languages are currently in the works.
 
@@ -11,10 +11,11 @@ Implementations in other languages are currently in the works.
 
 ```
 # COMMENT
-DEF FLAG:
-    A=0
-    B=0
-    C=0
+DEF FLAG
+    _A:INT=42
+    _B:V2D=8.0,8.0
+    _C:V3D=3.0,4.0,5.0
+    _D:STR=HELLO
 END FLAG
 ```
 
@@ -25,7 +26,7 @@ Comments can be added to *init.swsd* files using the hashtag character (#). Thes
 Save files generated will contain one key/value pair per line, and there must be no spaces between the parameters and assignment operator. For the example above, the generated save file would appear as:
 
 ```
-FLAG:C=0
+FLAG_C=0
 FLAG:B=0
 FLAG:A=0
 ```
