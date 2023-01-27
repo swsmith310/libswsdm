@@ -34,13 +34,13 @@ namespace sws
     struct INT : public type {
         int i;
         INT(int i);
-        auto get(char v='\0');
+        auto get(char v='\0') { return i; };
     };
 
     struct FLT : public type {
         float f;
         FLT(float f);
-        auto get(char v='\0');
+        auto get(char v='\0') { return f; }
     };
 
     struct V2D : public type {
@@ -48,7 +48,16 @@ namespace sws
         float y;
         V2D(float x, float y);
         std::string to_string();
-        auto get(char v='\0');
+        auto get(char v='\0') {
+            switch(v) {
+                case 'x':
+                    return x;
+                case 'y':
+                    return y;
+                default:
+                    return 0.0f;
+            }
+        }
     };
 
     struct V3D : public type {
@@ -57,7 +66,18 @@ namespace sws
         float z;
         V3D(float x, float y, float z);
         std::string to_string();
-        auto get(char v='\0');
+        auto get(char v='\0') {
+            switch(v) {
+                case 'x':
+                    return x;
+                case 'y':
+                    return y;
+                case 'z':
+                    return z;
+                default:
+                    return 0.0f;
+            }
+        }
     };
 
     struct data {
@@ -75,8 +95,8 @@ namespace sws
         static void load_init();
         static void load_data(const std::string &sf);
         static void save_data(const std::string &sf);
-        static sws::INT* get_int(const std::string &k);
-        static sws::FLT* get_flt(const std::string &k);
+        static int get_int(const std::string &k);
+        static float get_flt(const std::string &k);
         static sws::V2D* get_v2d(const std::string &k);
         static sws::V3D* get_v3d(const std::string &k);
     };

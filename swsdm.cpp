@@ -43,28 +43,13 @@ sws::INT::INT(int i) {
     this->i = i;
 }
 
-auto sws::INT::get(char v) { return i; }
-
 sws::FLT::FLT(float f) {
     this->f = f;
 }
 
-auto sws::FLT::get(char v) { return f; }
-
 sws::V2D::V2D(float x, float y) {
     this->x = x;
     this->y = y;
-}
-
-auto sws::V2D::get(char v) {
-    switch(v) {
-        case 'x':
-            return x;
-        case 'y':
-            return y;
-        default:
-            return 0.0f;
-    }
 }
 
 std::string sws::V2D::to_string() {
@@ -75,19 +60,6 @@ sws::V3D::V3D(float x, float y, float z) {
     this->x = x;
     this->y = y;
     this->z = z;
-}
-
-auto sws::V3D::get(char v) {
-    switch(v) {
-        case 'x':
-            return x;
-        case 'y':
-            return y;
-        case 'z':
-            return z;
-        default:
-            return 0.0f;
-    }
 }
 
 std::string sws::V3D::to_string() {
@@ -170,12 +142,12 @@ void sws::DM::save_data(const std::string &sf) {
     }
 }
 
-sws::INT* sws::DM::get_int(const std::string &k) {
-    return (sws::INT*)data[k]->raw_value;
+int sws::DM::get_int(const std::string &k) {
+    return ((sws::INT*)data[k]->raw_value)->get();
 }
 
-sws::FLT* sws::DM::get_flt(const std::string &k) {
-    return (sws::FLT*)data[k]->raw_value;
+float sws::DM::get_flt(const std::string &k) {
+    return ((sws::FLT*)data[k]->raw_value)->get();
 }
 
 sws::V2D* sws::DM::get_v2d(const std::string &k) {
@@ -191,14 +163,14 @@ int main() {
     sws::DM();
     sws::DM::load_data("test");
 
-    sws::INT* i = sws::DM::get_int("FLAG_A");
-    sws::FLT* f = sws::DM::get_flt("FLAG_B");
+    int i = sws::DM::get_int("FLAG_A");
+    float f = sws::DM::get_flt("FLAG_B");
     sws::V2D* x = sws::DM::get_v2d("FLAG_C");
     sws::V3D* y = sws::DM::get_v3d("FLAG_D");
     std::string s = sws::DM::data["FLAG_E"]->value;
 
-    std::cout << "INT: " << i->get() << std::endl;
-    std::cout << "FLT: " << f->get() << std::endl;
+    std::cout << "INT: " << i << std::endl;
+    std::cout << "FLT: " << f << std::endl;
     std::cout << "V2D_X: " << x->get('x') << std::endl;
     std::cout << "V3D_Y: " << y->get('y') << std::endl;
     std::cout << "STR: " << s << std::endl;
