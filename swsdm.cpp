@@ -158,7 +158,7 @@ sws::V3D* sws::DM::get_v3d(const std::string &k) {
     return (sws::V3D*)data[k]->raw_value;
 }
 // Uncomment and compile for basic testing
-int main() {
+/*int main() {
     int t1; float t2, t3, t4; std::string t5;
     sws::DM();
     sws::DM::load_data("test");
@@ -193,4 +193,4 @@ int main() {
 
     sws::DM::save_data("test");
     return 0;
-}
+}*/
