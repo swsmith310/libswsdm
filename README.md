@@ -2,6 +2,8 @@
 ## Developed by Spencer W. Smith (spencerwayne310@gmail.com)
 ### Last updated 8 December 2022
 
+## THIS PROJECT IS BEING DEPRECATED 7/27/23
+
 *libswsdm* is a very simple, typesafe scripting language designed primarily for saving and loading game data. This implementation uses only standard C++17 and is therefore highly portable. By default this project is compiled using clang, however you can also use gcc if you prefer.
 
 Implementations in other languages are currently in the works.
